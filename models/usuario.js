@@ -6,6 +6,10 @@ const UsuarioSchema = Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
+    apellido: {
+        type: String,
+        required: [true, 'El apellido es obligatorio']
+    },
     correo: {
         type: String,
         required: [true, 'El correo es obligatorio'],
@@ -28,10 +32,14 @@ const UsuarioSchema = Schema({
         type: Boolean,
         default: true
     },
-    google: {
-        type: Boolean,
-        default: false
+    genero: {
+        type: String,
+        required: [true, 'El genero es obligatiro']
     },
+    telefono: {
+        type: String,
+        required: [true, 'El telefono es obligatorio']
+    }
 });
 
 
