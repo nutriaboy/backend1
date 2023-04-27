@@ -11,12 +11,22 @@ class Server {
         this.port = process.env.PORT;
 
         this.paths = {
-            auth:       '/api/auth',
-            buscar:     '/api/buscar',
-            categorias: '/api/categorias',
-            productos:  '/api/productos',
-            usuarios:   '/api/usuarios',
-            uploads:    '/api/uploads',
+            auth:            '/api/auth',
+            usuarios:        '/api/usuarios',
+            suscriptores:    '/api/suscriptores',
+            tiposUsuarios:   '/api/tiposUsuarios',
+            ventas:          '/api/ventas',
+            detalleVentas :  '/api/detalleVentas',
+            detalleCervezas: '/api/detalleCervezas',
+            tipoCervezas:    '/api/tipoCervezas',
+            cervezas:        '/api/cervezas',
+            proveedores:     '/api/proveedores',
+            eventos:         '/api/eventos',
+
+            // buscar:     '/api/buscar',
+            // categorias: '/api/categorias',
+            // productos:  '/api/productos',
+            // uploads:    '/api/uploads',
         }
 
 
@@ -57,13 +67,22 @@ class Server {
 
     routes() {
         
-        this.app.use( this.paths.auth, require('../routes/auth'));
-        this.app.use( this.paths.buscar, require('../routes/buscar'));
-        this.app.use( this.paths.categorias, require('../routes/categorias'));
-        this.app.use( this.paths.productos, require('../routes/productos'));
-        this.app.use( this.paths.usuarios, require('../routes/usuarios'));
-        this.app.use( this.paths.uploads, require('../routes/uploads'));
-        
+        this.app.use( this.paths.auth,            require('../routes/auth'));
+        this.app.use( this.paths.usuarios,        require('../routes/usuarios'));
+        this.app.use( this.paths.suscriptores,    require('../routes/suscriptores'));
+        this.app.use( this.paths.tiposUsuarios,   require('../routes/tiposUsuarios'));
+        this.app.use( this.paths.ventas,          require('../routes/ventas'));
+        this.app.use( this.paths.detalleVentas,   require('../routes/detalleVentas'));
+        this.app.use( this.paths.detalleCervezas, require('../routes/detalleCervezas'));
+        this.app.use( this.paths.tipoCervezas,    require('../routes/tipoCervezas'));
+        this.app.use( this.paths.cervezas,        require('../routes/cervezas'));
+        this.app.use( this.paths.proveedores,     require('../routes/proveedores'));
+        this.app.use( this.paths.eventos,         require('../routes/eventos'));
+
+        // this.app.use( this.paths.buscar, require('../routes/buscar'));
+        // this.app.use( this.paths.categorias, require('../routes/categorias'));
+        // this.app.use( this.paths.productos, require('../routes/productos'));
+        // this.app.use( this.paths.uploads, require('../routes/uploads'));
     }
 
     listen() {

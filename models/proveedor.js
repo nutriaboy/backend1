@@ -1,4 +1,3 @@
-
 const { Schema, model } = require('mongoose');
 
 const ProveedorSchema = Schema({
@@ -24,3 +23,5 @@ const ProveedorSchema = Schema({
         default: true
     }
 });
+
+module.exports = model( 'Proveedor', ProveedorSchema );

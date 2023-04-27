@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose');
 
 const CervezaSchema = Schema({
-    usuario: {
+    proveedor: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario',
+        ref: 'Proveedor',
         required: true,
         unique: false,
     },

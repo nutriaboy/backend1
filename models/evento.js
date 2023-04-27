@@ -17,3 +17,5 @@ const EventoSchema = Schema({
 },{
         timestamps: true
 });
+
+module.exports = model( 'Evento', EventoSchema );
