@@ -27,8 +27,8 @@ const usuariosGet = async(req = request, res = response) => {
 
 const usuariosPost = async(req, res = response) => {
     
-    const { nombre, correo, password, rol } = req.body;
-    const usuario = new Usuario({ nombre, correo, password, rol });
+    const { nombre, apellido, correo, password, rol, telefono, direccion, genero } = req.body;
+    const usuario = new Usuario({ nombre, apellido, correo, password, rol, telefono, direccion, genero });
 
     // Encriptar la contraseña
     const salt = bcryptjs.genSaltSync();
@@ -40,7 +40,8 @@ const usuariosPost = async(req, res = response) => {
     // Generar el JWT
     const token = await generarJWT( usuario.id );
 
-    res.json({
+    res.status(201).json({
+        ok: true,
         usuario,
         token
     });
@@ -49,7 +50,7 @@ const usuariosPost = async(req, res = response) => {
 const usuariosPut = async(req, res = response) => {
 
     const { id } = req.params;
-    const { _id, password, google, correo, ...resto } = req.body;
+    const { _id, password, correo, estado, ...resto } = req.body;
 
     if ( password ) {
         // Encriptar la contraseña
@@ -57,9 +58,12 @@ const usuariosPut = async(req, res = response) => {
         resto.password = bcryptjs.hashSync( password, salt );
     }
 
-    const usuario = await Usuario.findByIdAndUpdate( id, resto );
+    const usuario = await Usuario.findByIdAndUpdate( id, resto, { new: true } );
 
-    res.json(usuario);
+    res.status(200).json({
+        ok: true,
+        usuario
+    });
 }
 
 const usuariosPatch = (req, res = response) => {
@@ -71,7 +75,7 @@ const usuariosPatch = (req, res = response) => {
 const usuariosDelete = async(req, res = response) => {
 
     const { id } = req.params;
-    const usuario = await Usuario.findByIdAndUpdate( id, { estado: false } );
+    const usuario = await Usuario.findByIdAndUpdate( id, { estado: false }, { new: true } );
 
     
     res.json(usuario);
