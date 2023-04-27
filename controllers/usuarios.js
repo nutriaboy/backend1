@@ -5,7 +5,7 @@ const bcryptjs = require('bcryptjs');
 const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers');
 
-
+//TODO: Crear Endpoint de Admin, luego crear nueva Route de admin!
 
 const usuariosGet = async(req = request, res = response) => {
 
@@ -50,7 +50,7 @@ const usuariosPost = async(req, res = response) => {
 const usuariosPut = async(req, res = response) => {
 
     const { id } = req.params;
-    const { _id, password, correo, estado, ...resto } = req.body;
+    const { _id, password, correo, estado, rol, ...resto } = req.body;
 
     if ( password ) {
         // Encriptar la contraseña
