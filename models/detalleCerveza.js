@@ -18,11 +18,11 @@ const DetalleCervezaSchema = Schema({
         type: String,
         required: true
     },
-    cantidad: {
-        type: Number,
-        default: 1,
+    marca: {
+        type: String,
+        required: true
     },
-    precio: {
+    precioUnit: {
         type: Number,
         default: 0,
     },

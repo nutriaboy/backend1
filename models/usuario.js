@@ -6,6 +6,10 @@ const UsuarioSchema = Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
+    password: {
+        type: String,
+        required: [true, 'La contraseña es obligatoria'],
+    },
     apellido: {
         type: String,
         required: [true, 'El apellido es obligatorio']
@@ -15,30 +19,27 @@ const UsuarioSchema = Schema({
         required: [true, 'El correo es obligatorio'],
         unique: true
     },
-    password: {
-        type: String,
-        required: [true, 'La contraseña es obligatoria'],
-    },
-    img: {
-        type: String,
-    },
     rol: {
         type: String,
         required: true,
         default: 'USER_ROLE',
         emun: ['ADMIN_ROLE', 'USER_ROLE']
     },
-    estado: {
-        type: Boolean,
-        default: true
+    telefono: {
+        type: String,
+        required: [true, 'El telefono es obligatorio']
+    },
+    direccion: {
+        type: String,
+        required: [true, 'La direccion es obligatoria']
     },
     genero: {
         type: String,
         required: [true, 'El genero es obligatiro']
     },
-    telefono: {
-        type: String,
-        required: [true, 'El telefono es obligatorio']
+    estado: {
+        type: Boolean,
+        default: true
     }
 });
 
