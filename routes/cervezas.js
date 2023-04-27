@@ -3,7 +3,7 @@ const { check } = require('express-validator');
 
 const router = Router();
 
-router.get('/', usuariosGet );
+router.get('/', );
 
 router.post('/',[]);
 
