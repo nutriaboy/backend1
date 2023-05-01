@@ -24,4 +24,10 @@ const ProveedorSchema = Schema({
     }
 });
 
+ProveedorSchema.methods.toJSON = function() {
+    const { __v, _id, ...proveedor  } = this.toObject();
+    proveedor.uid = _id;
+    return proveedor;
+}
+
 module.exports = model( 'Proveedor', ProveedorSchema );

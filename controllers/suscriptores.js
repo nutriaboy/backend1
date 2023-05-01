@@ -1,17 +1,7 @@
 const { response } = require('express');
 const { Suscriptor } = require('../models');
-/*
 
-const obtenerSuscriptor = async(req, res = response ) => {
 
-    const { id } = req.params;
-    const suscriptor = await Suscriptor.findById( id )
-                           
-
-    res.json( suscriptor );
-
-}
-*/
 const obtenerSuscriptores = async(req, res = response ) => {
 
         const { limite = 5, desde = 0 } = req.query;
@@ -33,7 +23,7 @@ const obtenerSuscriptores = async(req, res = response ) => {
 
 const crearSuscriptor = async(req, res = response) => {
     
-    const { usuario, ...body } = req.body;
+    const { estado, usuario, ...body } = req.body;
 
     try {
         const [suscriptorDB] = await Suscriptor.find({ usuario: usuario})
@@ -64,9 +54,40 @@ const crearSuscriptor = async(req, res = response) => {
     }
 }
 
+const actualizarSuscriptor = async( req, res = response ) => {
+
+    const { id } = req.params;
+    const { estado, usuario, ...data } = req.body;
+
+    const suscriptor = await Suscriptor.findByIdAndUpdate(id, data, { new: true });
+
+    await suscriptor
+        .populate('usuario', 'nombre apellido ')
+        .execPopulate();
+        
+    res.status(200).json({
+        ok: true,
+        suscriptor
+    });
+
+}
+
+const borrarSuscriptor = async(req, res = response ) => {
+
+    const { id } = req.params;
+    const suscriptorBorrado = await Suscriptor.findByIdAndUpdate( id, { estado: false }, {new: true });
+
+    res.status(200).json({
+        ok: true,
+        suscriptorBorrado
+    });
+}
+
 module.exports = {
     obtenerSuscriptores,
     crearSuscriptor,
+    actualizarSuscriptor,
+    borrarSuscriptor
 
 };
 
