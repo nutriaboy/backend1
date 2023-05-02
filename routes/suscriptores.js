@@ -2,9 +2,9 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { obtenerSuscriptores, crearSuscriptor, actualizarSuscriptor, borrarSuscriptor } = require('../controllers/suscriptores');
 const { existeUsuarioPorId, existeSuscriptorPorId } = require('../helpers');
-const { validarCampos, esAdminRole } = require('../middlewares');
+const { validarCampos, esAdminRole, validarJWT } = require('../middlewares');
 
-// ruta '/api/suscriptores',
+// path: '/api/suscriptores',
 
 
 const router = Router();
@@ -14,6 +14,7 @@ router.get('/', obtenerSuscriptores );
 
 // crearSuscriptor
 router.post('/',[
+    validarJWT,
     check('usuario', 'No es un id de Mongo válido').isMongoId(),
     check('usuario').custom( existeUsuarioPorId ),
     validarCampos
@@ -21,6 +22,7 @@ router.post('/',[
 
 // actualizarSuscriptor
 router.put('/:id', [
+    validarJWT,
     check('id', 'No es un id de Mongo válido').isMongoId(),
     check('id').custom( existeSuscriptorPorId ),
     validarCampos
@@ -28,6 +30,7 @@ router.put('/:id', [
 
 //borrarSuscriptor
 router.delete('/:id', [
+    validarJWT,
     esAdminRole,
     check('id', 'No es un id de Mongo válido').isMongoId(),
     check('id').custom( existeSuscriptorPorId ),

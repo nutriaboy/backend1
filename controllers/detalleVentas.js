@@ -3,9 +3,100 @@ const { DetalleVenta } = require('../models');
 
 
 
+const obtenerDetallesVentas = async (req, res = response) => {
+
+    const { limite = 5, desde = 0 } = req.query;
+    const query = { estado: true };
+
+    const [total, detallesVentas] = await Promise.all([
+        DetalleVenta.countDocuments(query),
+        DetalleVenta.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+            .populate('detalleCerveza', 'nombre marca precioUnit')
+
+    ]);
+
+    res.json({
+        ok: true,
+        total,
+        detallesVentas
+    });
+}
+
+const crearDetalleVenta = async (req, res = response) => {
+
+    const { estado, detalleCerveza, ...body } = req.body;
+
+    try {
+        const detalleCervezaDB = await DetalleVenta.findOne({ detalleCerveza })
+
+
+        if (detalleCervezaDB) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'No se puede duplicar Detalle de Cerveza'
+            });
+        }
+
+
+        const detalleVenta = new DetalleVenta({ detalleCerveza, ...body });
+        // Guardar en BD
+        await detalleVenta.save();
+
+
+
+        res.status(201).json({
+            ok: true,
+            detalleVenta
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hablar con el administrador'
+        });
+    }
+}
+
+const actualizarDetalleVenta = async (req, res = response) => {
+
+    const { id } = req.params;
+    const { estado, ...data } = req.body;
+
+    const detalleVenta = await DetalleVenta.findByIdAndUpdate(id, data, { new: true });
+
+    await detalleVenta
+        .populate('detalleCerveza', 'nombre marca precioUnit')
+        .execPopulate();
+
+    res.status(200).json({
+        ok: true,
+        detalleVenta
+    });
+
+}
+
+const borrarDetalleVenta = async (req, res = response) => {
+
+    const { id } = req.params;
+    const detalleVentaBorrada = await DetalleVenta.findByIdAndUpdate(id, { estado: false }, { new: true });
+
+    res.status(200).json({
+        ok: true,
+        detalleVentaBorrada
+    });
+}
 
 
 
 
+module.exports = {
+    obtenerDetallesVentas,
+    crearDetalleVenta,
+    actualizarDetalleVenta,
+    borrarDetalleVenta,
 
-module.exports = {};
+
+
+};

@@ -31,8 +31,13 @@ const DetalleCervezaSchema = Schema({
         default: true,
     }
 
-
 });
+
+DetalleCervezaSchema.methods.toJSON = function() {
+    const { __v, _id, ...detalleCerveza  } = this.toObject();
+    detalleCerveza.id = _id;
+    return detalleCerveza;
+}
 
 
 module.exports = model('DetalleCerveza', DetalleCervezaSchema);

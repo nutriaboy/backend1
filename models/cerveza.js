@@ -15,5 +15,11 @@ const CervezaSchema = Schema({
     timestamps: true
 });
 
+CervezaSchema.methods.toJSON = function() {
+    const { __v, _id, ...cerveza  } = this.toObject();
+    cerveza.id = _id;
+    return cerveza;
+}
+
 
 module.exports = model('Cerveza', CervezaSchema);

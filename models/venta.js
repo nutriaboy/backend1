@@ -15,5 +15,11 @@ const VentaSchema = Schema({
         timestamps: true
 });
 
+VentaSchema.methods.toJSON = function() {
+    const { __v, _id, ...venta  } = this.toObject();
+    venta.id = _id;
+    return venta;
+}
+
 
 module.exports = model( 'Venta', VentaSchema );

@@ -26,7 +26,6 @@ const crearTipoCerveza = async(req, res = response) => {
     const { estado,...body } = req.body;
 
     try {
-
         const tipoCerveza = new TipoCerveza({ ...body });
         // Guardar en BD
         await tipoCerveza.save();

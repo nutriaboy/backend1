@@ -1,5 +1,5 @@
 const Role = require('../models/role');
-const { Usuario, Suscriptor, Proveedor } = require('../models');
+const { Usuario, Suscriptor, Proveedor, Cerveza, Evento, TipoCerveza, DetalleCerveza, Ventas, DetalleVenta } = require('../models');
 
 const esRoleValido = async(rol = 'USER_ROLE') => {
 
@@ -20,7 +20,7 @@ const emailExiste = async( correo = '' ) => {
 
 const existeUsuarioPorId = async( id ) => {
 
-    // Verificar si el correo existe
+    // Verificar si el usuario existe
     const existeUsuario = await Usuario.findById(id);
     if ( !existeUsuario ) {
         throw new Error(`El id no existe ${ id }`);
@@ -31,7 +31,7 @@ const existeUsuarioPorId = async( id ) => {
  **/
 const existeSuscriptorPorId = async( id ) => {
 
-    // Verificar si el correo existe
+    // Verificar si el suscriptor existe
     const existeSuscriptor = await Suscriptor.findById(id);
     if ( !existeSuscriptor ) {
         throw new Error(`El id no existe ${ id }`);
@@ -44,34 +44,86 @@ const existeSuscriptorPorId = async( id ) => {
  **/
 const existeProveedorPorId = async( id ) => {
 
-    // Verificar si el correo existe
+    // Verificar si el proveedor existe
     const existeProveedor = await Proveedor.findById(id);
     if ( !existeProveedor ) {
         throw new Error(`El id no existe ${ id }`);
     }
 }
-/**
- * Categorias
-const existeCategoriaPorId = async( id ) => {
 
-    // Verificar si el correo existe
-    const existeCategoria = await Categoria.findById(id);
-    if ( !existeCategoria ) {
+/**
+ * Cerveza
+ **/
+const existeCervezaPorId = async( id ) => {
+
+    // Verificar si la cerveza existe
+    const existeCerveza = await Cerveza.findById(id);
+    if ( !existeCerveza ) {
         throw new Error(`El id no existe ${ id }`);
     }
 }
-/**
- * Productos
-const existeProductoPorId = async( id ) => {
 
-    // Verificar si el correo existe
-    const existeProducto = await Producto.findById(id);
-    if ( !existeProducto ) {
+
+
+/**
+ * Eventos
+ **/
+const existeEventoPorId = async( id ) => {
+
+    // Verificar si el evento existe
+    const existeEvento = await Evento.findById(id);
+    if ( !existeEvento ) {
         throw new Error(`El id no existe ${ id }`);
     }
 }
- */
 
+/**
+ * Tipo de Cerveza
+ **/
+const existeTipoCervezaPorId = async( id ) => {
+
+    // Verificar si el tipo de cerveza existe
+    const existeTipoCerveza = await TipoCerveza.findById(id);
+    if ( !existeTipoCerveza ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
+
+/**
+ * Detalle de Cerveza
+ **/
+const existeDetalleCervezaPorId = async( id ) => {
+
+    // Verificar si el tipo de cerveza existe
+    const existeDetalleCerveza = await DetalleCerveza.findById(id);
+    if ( !existeDetalleCerveza ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
+
+/**
+ * Venta
+ **/
+const existeVentaPorId = async( id ) => {
+
+    // Verificar si el tipo de cerveza existe
+    const existeVenta = await Ventas.findById(id);
+    if ( !existeVenta ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
+
+/**
+ * Detalle de Venta
+ **/
+const existeDetalleVentaPorId = async( id ) => {
+
+    // Verificar si el tipo de cerveza existe
+    const existeDetalleVenta = await DetalleVenta.findById(id);
+    if ( !existeDetalleVenta ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
 
 /**
  * Validar colecciones permitidas
@@ -92,6 +144,12 @@ module.exports = {
     existeUsuarioPorId,
     existeSuscriptorPorId,
     existeProveedorPorId,
-    coleccionesPermitidas
+    coleccionesPermitidas,
+    existeCervezaPorId,
+    existeEventoPorId,
+    existeTipoCervezaPorId,
+    existeDetalleCervezaPorId,
+    existeVentaPorId,
+    existeDetalleVentaPorId,
 }
 

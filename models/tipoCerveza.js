@@ -12,5 +12,10 @@ const TipoCervezaSchema = Schema({
 
 });
 
+TipoCervezaSchema.methods.toJSON = function() {
+    const { __v, _id, ...tipoCerveza  } = this.toObject();
+    tipoCerveza.id = _id;
+    return tipoCerveza;
+}
 
 module.exports = model( 'TipoCerveza', TipoCervezaSchema );
