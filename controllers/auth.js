@@ -111,6 +111,7 @@ const validarTokenUsuario = async (req, res = response ) => {
     const token = await generarJWT( req.usuario._id );
     
     res.json({
+        ok: true,
         usuario: req.usuario,
         token: token,
     })
