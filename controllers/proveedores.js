@@ -71,29 +71,29 @@ const actualizarProveedor = async (req, res = response) => {
     const { id } = req.params;
     const { estado, nombre, correo, ...data } = req.body;
     try {
-        const [[proveedorName], [proveedorEmail]] = await Promise.all([
-            Proveedor.find({ nombre: nombre }),
-            Proveedor.find({ correo: correo })
-        ]);
+        // const [[proveedorName], [proveedorEmail]] = await Promise.all([
+        //     Proveedor.find({ nombre: nombre }),
+        //     Proveedor.find({ correo: correo })
+        // ]);
 
 
-        if (proveedorName) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'El proveedor ya se encuentra registrado'
-            });
-        }
-        // Operador Ternario
-        (nombre) ? data.nombre = nombre : null;
+        // if (proveedorName) {
+        //     return res.status(400).json({
+        //         ok: false,
+        //         msg: 'El proveedor ya se encuentra registrado'
+        //     });
+        // }
+        // // Operador Ternario
+        // (nombre) ? data.nombre = nombre : null;
     
-        if (proveedorEmail) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'El correo del proveedor ya se encuentra registrado'
-            });
-        }
-        // Operador Ternario
-        (correo) ? data.correo = correo : null;
+        // if (proveedorEmail) {
+        //     return res.status(400).json({
+        //         ok: false,
+        //         msg: 'El correo del proveedor ya se encuentra registrado'
+        //     });
+        // }
+        // // Operador Ternario
+        // (correo) ? data.correo = correo : null;
         
 
         const proveedor = await Proveedor.findByIdAndUpdate(id, data, { new: true });
