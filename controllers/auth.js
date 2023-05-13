@@ -10,13 +10,13 @@ const { googleVerify } = require('../helpers/google-verify');
 const login = async(req, res = response) => {
 
     const { correo, password } = req.body;
-
     try {
       
         // Verificar si el email existe
         const usuario = await Usuario.findOne({ correo });
         if ( !usuario ) {
             return res.status(400).json({
+                ok: false,
                 msg: 'Usuario / Password no son correctos - correo'
             });
         }
@@ -24,6 +24,7 @@ const login = async(req, res = response) => {
         // SI el usuario está activo
         if ( !usuario.estado ) {
             return res.status(400).json({
+                ok: false,
                 msg: 'Usuario / Password no son correctos - estado: false'
             });
         }
@@ -32,9 +33,69 @@ const login = async(req, res = response) => {
         const validPassword = bcryptjs.compareSync( password, usuario.password );
         if ( !validPassword ) {
             return res.status(400).json({
+                ok: false,
                 msg: 'Usuario / Password no son correctos - password'
             });
         }
+
+        // Generar el JWT
+        const token = await generarJWT( usuario.id );
+
+        res.json({
+            ok: true,
+            usuario,
+            token
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }   
+
+}
+
+
+const loginAdmin = async(req, res = response) => {
+
+    const { correo, password } = req.body;
+    try {
+      
+        // Verificar si el email existe
+        const usuario = await Usuario.findOne({ correo });
+        if ( !usuario ) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario / Password no son correctos - correo'
+            });
+        }
+
+        // SI el usuario está activo
+        if ( !usuario.estado ) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario / Password no son correctos - estado: false'
+            });
+        }
+
+        // Verificar la contraseña
+        const validPassword = bcryptjs.compareSync( password, usuario.password );
+        if ( !validPassword ) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario / Password no son correctos - password'
+            });
+        }
+         // Verificar si es Admin
+         if ( usuario.rol !== 'ADMIN_ROLE' ) {
+            return res.status(401).json({
+                ok: false,
+                msg: `${ usuario.nombre } no es administrador - No puede iniciar sesión aquí`
+            });
+        }
+
 
         // Generar el JWT
         const token = await generarJWT( usuario.id );
@@ -53,7 +114,6 @@ const login = async(req, res = response) => {
     }   
 
 }
-
 
 const googleSignin = async(req, res = response) => {
 
@@ -122,6 +182,7 @@ const validarTokenUsuario = async (req, res = response ) => {
 
 module.exports = {
     login,
+    loginAdmin,
     googleSignin,
     validarTokenUsuario
 }
