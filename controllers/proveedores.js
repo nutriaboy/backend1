@@ -69,7 +69,7 @@ const crearProveedor = async (req, res = response) => {
 const actualizarProveedor = async (req, res = response) => {
 
     const { id } = req.params;
-    const { estado, nombre, correo, ...data } = req.body;
+    const { estado, ...data } = req.body;
     try {
         // const [[proveedorName], [proveedorEmail]] = await Promise.all([
         //     Proveedor.find({ nombre: nombre }),
