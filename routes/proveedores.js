@@ -17,6 +17,7 @@ router.post('/', [
     esAdminRole,
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('correo', 'El correo no es válido').isEmail(),
+    check('rut', 'El rut es obligatorio').not().isEmpty(),
     check('telefono', 'El teléfono es obligatorio').not().isEmpty(),
     check('direccion', 'la dirección es obligatoria').not().isEmpty(),
     validarCampos

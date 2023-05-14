@@ -19,6 +19,11 @@ const UsuarioSchema = Schema({
         required: [true, 'El correo es obligatorio'],
         unique: true
     },
+    rut: {
+        type: String,
+        required: true,
+        unique: true
+    },
     rol: {
         type: String,
         required: true,

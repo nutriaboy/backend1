@@ -23,13 +23,14 @@ const obtenerProveedores = async (req, res = response) => {
 
 const crearProveedor = async (req, res = response) => {
 
-    const { estado, nombre, correo, ...body } = req.body;
+    const { estado, nombre, correo, rut, ...body } = req.body;
 
     try {
 
-        const [[proveedorName], [proveedorEmail]] = await Promise.all([
+        const [[proveedorName], [proveedorEmail], [proveedorRut]] = await Promise.all([
             Proveedor.find({ nombre: nombre }),
-            Proveedor.find({ correo: correo })
+            Proveedor.find({ correo: correo }),
+            Proveedor.find({ rut: rut })
         ]);
 
 
@@ -48,7 +49,14 @@ const crearProveedor = async (req, res = response) => {
             });
         }
 
-        const proveedor = new Proveedor({ nombre, correo, ...body });
+        if (proveedorRut) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'El rut del proveedor ya se encuentra registrado'
+            });
+        }
+
+        const proveedor = new Proveedor({ nombre, correo, rut, ...body });
         // Guardar en BD
         await proveedor.save();
 
@@ -69,7 +77,7 @@ const crearProveedor = async (req, res = response) => {
 const actualizarProveedor = async (req, res = response) => {
 
     const { id } = req.params;
-    const { estado, ...data } = req.body;
+    const { estado, rut, ...data } = req.body;
     try {
         // const [[proveedorName], [proveedorEmail]] = await Promise.all([
         //     Proveedor.find({ nombre: nombre }),

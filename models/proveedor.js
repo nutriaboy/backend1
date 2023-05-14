@@ -9,7 +9,11 @@ const ProveedorSchema = Schema({
         type: String,
         required: [true, 'El correo es obligatoria'],
     },
-   
+    rut: {
+        type: String,
+        required: true,
+        unique: true
+    },
     telefono: {
         type: String,
         required: [true, 'El telefono es obligatorio']
