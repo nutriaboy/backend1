@@ -30,7 +30,8 @@ const usuariosPost = async (req, res = response) => {
     const { nombre, apellido, correo, rut, password, rol, telefono, direccion, genero } = req.body;
 
     try {
-        const usuarioRut = Usuario.findOne({ rut: rut })
+        const usuarioRut = await Usuario.findOne({ rut })
+        console.log(usuarioRut)
 
         if (usuarioRut) {
             return res.status(400).json({
