@@ -30,7 +30,7 @@ const usuariosPost = async (req, res = response) => {
     const { nombre, apellido, correo, rut, password, rol, telefono, direccion, genero } = req.body;
 
     try {
-        const usuarioRut = await Usuario.findOne({ rut })
+        const [usuarioRut] = await Usuario.find({ rut })
         console.log(usuarioRut)
 
         if (usuarioRut) {
