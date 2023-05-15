@@ -87,6 +87,19 @@ const usuariosPut = async (req, res = response) => {
     });
 }
 
+const editarRolUsuario = async (req, res = response) => {
+
+    const { id } = req.params;
+    const { _id, password, correo, estado, rut, ...resto } = req.body;
+
+    const usuario = await Usuario.findByIdAndUpdate(id, resto, { new: true });
+
+    res.status(200).json({
+        ok: true,
+        usuario
+    });
+}
+
 const usuariosPatch = (req, res = response) => {
     res.json({
         msg: 'patch API - usuariosPatch'
@@ -109,6 +122,7 @@ module.exports = {
     usuariosGet,
     usuariosPost,
     usuariosPut,
+    editarRolUsuario,
     usuariosPatch,
     usuariosDelete,
 }

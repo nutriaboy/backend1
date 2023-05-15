@@ -16,7 +16,8 @@ const { usuariosGet,
         usuariosPut,
         usuariosPost,
         usuariosDelete,
-        usuariosPatch } = require('../controllers/usuarios');
+        usuariosPatch, 
+        editarRolUsuario} = require('../controllers/usuarios');
 
 const router = Router();
 
@@ -43,6 +44,16 @@ router.put('/:id',[
     check('rol').custom( esRoleValido ), 
     validarCampos
 ], usuariosPut );
+
+router.put('/admin/:id',[
+    validarJWT,
+    esAdminRole,
+    check('id', 'No es un ID válido').isMongoId(),
+    check('id').custom( existeUsuarioPorId ),
+    check('rol').custom( esRoleValido ), 
+    validarCampos
+], editarRolUsuario );
+// editarRolUsuario
 
 
 router.delete('/:id',[
