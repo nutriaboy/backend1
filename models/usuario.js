@@ -32,15 +32,15 @@ const UsuarioSchema = Schema({
     },
     telefono: {
         type: String,
-        required: [true, 'El telefono es obligatorio']
+    },
+    ciudad: { 
+        type: String,
     },
     direccion: {
         type: String,
-        required: [true, 'La direccion es obligatoria']
     },
     genero: {
         type: String,
-        required: [true, 'El genero es obligatiro']
     },
     estado: {
         type: Boolean,
