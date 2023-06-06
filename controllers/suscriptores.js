@@ -28,6 +28,15 @@ const crearSuscriptor = async(req, res = response) => {
     try {
         const [suscriptorDB] = await Suscriptor.find({ usuario: usuario})
         
+        if ( suscriptorDB.estado === false ){
+            const { _id: id} = suscriptorDB
+            const suscriptor = await Suscriptor.findByIdAndUpdate( id, { estado: true }, {new: true });
+            return res.status(202).json({
+                ok: true,
+                suscriptor
+            });
+        }
+
         if ( suscriptorDB ){
             return res.status(400).json({
                 ok: false,
