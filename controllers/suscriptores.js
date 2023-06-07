@@ -23,14 +23,22 @@ const obtenerSuscriptores = async(req, res = response ) => {
 
 const obtenerSuscriptor = async(req, res = response ) => {
 
-    const { id } = req.params;
-    const suscriptor = await Suscriptor.findById( id )
-                            .populate('usuario', 'nombre apellido');
-
-    if ( !suscriptor.estado ) {
+    const { usuario } = req.params;
+    const suscriptor = await Suscriptor.findOne({ usuario: usuario })
+                                        .populate('usuario', 'nombre apellido');
+    // const suscriptor = await Suscriptor.findById( id )
+    //                         .populate('usuario', 'nombre apellido');
+    if (!suscriptor ) {
         return res.status(400).json({
             ok: false,
-            msg: 'El Suscriptor no se encuentra - estado: false'
+            msg: 'No se encuentra Suscrito'
+        });
+    }
+
+    if ( suscriptor && !suscriptor.estado ) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'No se encuentra Suscrito - estado: false'
         });
     }                        
 

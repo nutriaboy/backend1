@@ -11,9 +11,9 @@ const router = Router();
 
 router.get('/', obtenerSuscriptores );
 
-router.get('/:id',[
-    check('id', 'No es un id de Mongo válido').isMongoId(),
-    check('id').custom( existeSuscriptorPorId ),
+router.get('/:usuario',[
+    check('usuario', 'No es un id de Mongo válido').isMongoId(),
+    check('usuario').custom( existeUsuarioPorId ),
     validarCampos,
 ], obtenerSuscriptor );
 
