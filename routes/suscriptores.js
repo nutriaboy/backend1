@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerSuscriptores, crearSuscriptor, actualizarSuscriptor, borrarSuscriptor } = require('../controllers/suscriptores');
+const { obtenerSuscriptores, crearSuscriptor, actualizarSuscriptor, borrarSuscriptor, obtenerSuscriptor } = require('../controllers/suscriptores');
 const { existeUsuarioPorId, existeSuscriptorPorId } = require('../helpers');
 const { validarCampos, esAdminRole, validarJWT } = require('../middlewares');
 
@@ -10,6 +10,12 @@ const { validarCampos, esAdminRole, validarJWT } = require('../middlewares');
 const router = Router();
 
 router.get('/', obtenerSuscriptores );
+
+router.get('/:id',[
+    check('id', 'No es un id de Mongo válido').isMongoId(),
+    check('id').custom( existeSuscriptorPorId ),
+    validarCampos,
+], obtenerSuscriptor );
 
 
 // crearSuscriptor

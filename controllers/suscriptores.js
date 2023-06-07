@@ -21,6 +21,26 @@ const obtenerSuscriptores = async(req, res = response ) => {
         });
 }
 
+const obtenerSuscriptor = async(req, res = response ) => {
+
+    const { id } = req.params;
+    const suscriptor = await Suscriptor.findById( id )
+                            .populate('usuario', 'nombre apellido');
+
+    if ( !suscriptor.estado ) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'El Suscriptor no se encuentra - estado: false'
+        });
+    }                        
+
+    res.json({
+            ok: true,
+            suscriptor
+        });
+
+}
+
 const crearSuscriptor = async(req, res = response) => {
     
     const { estado, usuario, ...body } = req.body;
@@ -94,9 +114,10 @@ const borrarSuscriptor = async(req, res = response ) => {
 
 module.exports = {
     obtenerSuscriptores,
+    obtenerSuscriptor,
     crearSuscriptor,
     actualizarSuscriptor,
-    borrarSuscriptor
+    borrarSuscriptor,
 
 };
 
