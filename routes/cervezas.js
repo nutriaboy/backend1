@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { check, oneOf } = require('express-validator');
+const { check } = require('express-validator');
 const { obtenerCervezas, crearCerveza, actualizarCerveza, borrarCerveza } = require('../controllers/cervezas');
 const { existeProveedorPorId, existeCervezaPorId } = require('../helpers');
 const { validarJWT, esAdminRole, validarCampos } = require('../middlewares');

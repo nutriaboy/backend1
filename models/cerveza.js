@@ -1,18 +1,33 @@
 const { Schema, model } = require('mongoose');
 
 const CervezaSchema = Schema({
-    proveedor: {
+    tipoCerveza: {
         type: Schema.Types.ObjectId,
-        ref: 'Proveedor',
+        ref: 'TipoCerveza',
         required: true,
         unique: false,
+    },
+    nombre: {
+        type: String,
+        required: true,
+    },
+    marca: {
+        type: String,
+        required: true,
     },
     estado: {
         type: Boolean,
         default: true,
     },
-}, {
-    timestamps: true
+    precioUnit: {
+        type: Number,
+        default: 0,
+    },
+    stock: {
+        type: Number,
+        default: 0,
+    },
+    
 });
 
 CervezaSchema.methods.toJSON = function() {

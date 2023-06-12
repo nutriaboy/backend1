@@ -16,11 +16,13 @@ class Server {
             suscriptores:    '/api/suscriptores',
             tiposUsuarios:   '/api/tiposUsuarios',
             ventas:          '/api/ventas',
+            compras:         '/api/compras',
             detalleVentas :  '/api/detalleVentas',
-            detalleCervezas: '/api/detalleCervezas',
+            detalleCompras: '/api/detalleCompras',
             tipoCervezas:    '/api/tipoCervezas',
             cervezas:        '/api/cervezas',
             proveedores:     '/api/proveedores',
+            envios:          '/api/envios',
             eventos:         '/api/eventos',
 
             // buscar:     '/api/buscar',
@@ -72,11 +74,13 @@ class Server {
         this.app.use( this.paths.suscriptores,    require('../routes/suscriptores'));
         this.app.use( this.paths.tiposUsuarios,   require('../routes/tiposUsuarios'));
         this.app.use( this.paths.ventas,          require('../routes/ventas'));
+        this.app.use( this.paths.compras,          require('../routes/compras'));
         this.app.use( this.paths.detalleVentas,   require('../routes/detalleVentas'));
-        this.app.use( this.paths.detalleCervezas, require('../routes/detalleCervezas'));
+        this.app.use( this.paths.detalleCompras, require('../routes/detalleCompras'));
         this.app.use( this.paths.tipoCervezas,    require('../routes/tipoCervezas'));
         this.app.use( this.paths.cervezas,        require('../routes/cervezas'));
         this.app.use( this.paths.proveedores,     require('../routes/proveedores'));
+        this.app.use( this.paths.envios,         require('../routes/envios'));
         this.app.use( this.paths.eventos,         require('../routes/eventos'));
 
         // this.app.use( this.paths.buscar, require('../routes/buscar'));

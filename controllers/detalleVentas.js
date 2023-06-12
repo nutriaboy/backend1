@@ -13,7 +13,7 @@ const obtenerDetallesVentas = async (req, res = response) => {
         DetalleVenta.find(query)
             .skip(Number(desde))
             .limit(Number(limite))
-            .populate('detalleCerveza', 'nombre marca precioUnit')
+            .populate('cerveza', 'nombre marca precioUnit')
 
     ]);
 
@@ -26,13 +26,13 @@ const obtenerDetallesVentas = async (req, res = response) => {
 
 const crearDetalleVenta = async (req, res = response) => {
 
-    const { estado, detalleCerveza, ...body } = req.body;
+    const { estado, cerveza, ...body } = req.body;
 
     try {
-        const detalleCervezaDB = await DetalleVenta.findOne({ detalleCerveza })
+        const cervezaDB = await DetalleVenta.findOne({ cerveza })
 
 
-        if (detalleCervezaDB) {
+        if (cervezaDB) {
             return res.status(400).json({
                 ok: false,
                 msg: 'No se puede duplicar Detalle de Cerveza'
@@ -40,7 +40,7 @@ const crearDetalleVenta = async (req, res = response) => {
         }
 
 
-        const detalleVenta = new DetalleVenta({ detalleCerveza, ...body });
+        const detalleVenta = new DetalleVenta({cerveza, ...body });
         // Guardar en BD
         await detalleVenta.save();
 
@@ -67,7 +67,7 @@ const actualizarDetalleVenta = async (req, res = response) => {
     const detalleVenta = await DetalleVenta.findByIdAndUpdate(id, data, { new: true });
 
     await detalleVenta
-        .populate('detalleCerveza', 'nombre marca precioUnit')
+        .populate('cerveza', 'nombre marca precioUnit')
         .execPopulate();
 
     res.status(200).json({

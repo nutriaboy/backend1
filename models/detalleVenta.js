@@ -7,15 +7,25 @@ const DetalleVentaSchema = Schema({
         required: true,
         unique: false,
     },
-    detalleCerveza: {
+    cerveza: {
         type: Schema.Types.ObjectId,
-        ref: 'DetalleCerveza',
+        ref: 'Cerveza',
         required: true,
         unique: false,
     },
     estado: {
         type: Boolean,
         default: true,
+    },
+    cantidad: {
+        type: Number,
+        required: true,
+        default: 1,
+    },
+    precio: {
+        type: Number,
+        required: true,
+        default: 0,
     },
 });
 

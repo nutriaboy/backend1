@@ -14,7 +14,7 @@ const obtenerCervezas = async (req, res = response) => {
         Cerveza.find(query)
             .skip(Number(desde))
             .limit(Number(limite))
-            .populate('proveedor', 'nombre')
+            .populate('tipoCerveza', 'nombre')
     ]);
 
     res.json({
@@ -61,7 +61,7 @@ const actualizarCerveza = async (req, res = response) => {
         const cerveza = await Cerveza.findByIdAndUpdate(id, data, { new: true });
 
         await cerveza
-            .populate('proveedor', 'nombre')
+            .populate('tipoCerveza', 'nombre')
             .execPopulate();
 
         res.status(200).json({

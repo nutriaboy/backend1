@@ -1,5 +1,5 @@
 const Role = require('../models/role');
-const { Usuario, Suscriptor, Proveedor, Cerveza, Evento, TipoCerveza, DetalleCerveza, Ventas, DetalleVenta } = require('../models');
+const { Usuario, Suscriptor, Proveedor, Cerveza, Evento, TipoCerveza, DetalleCompra, Ventas, DetalleVenta } = require('../models');
 
 const esRoleValido = async(rol = 'USER_ROLE') => {
 
@@ -92,11 +92,11 @@ const existeTipoCervezaPorId = async( id ) => {
 /**
  * Detalle de Cerveza
  **/
-const existeDetalleCervezaPorId = async( id ) => {
+const existeDetalleCompraPorId = async( id ) => {
 
     // Verificar si el tipo de cerveza existe
-    const existeDetalleCerveza = await DetalleCerveza.findById(id);
-    if ( !existeDetalleCerveza ) {
+    const existeDetalleCompra = await DetalleCompra.findById(id);
+    if ( !existeDetalleCompra ) {
         throw new Error(`El id no existe ${ id }`);
     }
 }
@@ -148,7 +148,7 @@ module.exports = {
     existeCervezaPorId,
     existeEventoPorId,
     existeTipoCervezaPorId,
-    existeDetalleCervezaPorId,
+    existeDetalleCompraPorId,
     existeVentaPorId,
     existeDetalleVentaPorId,
 }

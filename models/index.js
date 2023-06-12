@@ -1,7 +1,7 @@
 // const Categoria = require('./categoria');
 // const Producto = require('./producto');
 const Cerveza        = require('./cerveza');
-const DetalleCerveza = require('./detalleCerveza');
+const DetalleCompra = require('./detalleCompra');
 const DetalleVenta   = require('./detalleVenta');
 const Evento         = require('./evento');
 const Proveedor      = require('./proveedor');
@@ -9,6 +9,8 @@ const Suscriptor     = require('./suscriptor');
 const TipoCerveza    = require('./tipoCerveza');
 const TipoUsuario    = require('./tipoUsuario');
 const Ventas         = require('./venta');
+const Compra         = require('./compra');
+const Envio          = require('./envio');
 const Role           = require('./role');
 const Server         = require('./server');
 const Usuario        = require('./usuario');
@@ -17,7 +19,7 @@ const Usuario        = require('./usuario');
 
 module.exports = {
     Cerveza,
-    DetalleCerveza,
+    DetalleCompra,
     DetalleVenta,
     Evento,
     Proveedor,
@@ -25,10 +27,10 @@ module.exports = {
     TipoCerveza,
     TipoUsuario,
     Ventas,
+    Compra,
     Role,
     Server,
     Usuario,
-    // Categoria,
-    // Producto,
+    Envio
 }
 
