@@ -51,7 +51,7 @@ const crearCerveza = async (req, res = response) => {
 const actualizarCerveza = async (req, res = response) => {
 
     const { id } = req.params;
-    const { estado, proveedor, ...data } = req.body;
+    const { estado, ...data } = req.body;
     try {
         
         if (proveedor) {
