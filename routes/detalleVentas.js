@@ -22,7 +22,6 @@ router.post('/', [
     validarCampos
 ], crearDetalleVenta);
 
-//TODO: Realizar una validacion de no permitr actualizar ID de Venta
 
 router.put('/:id', [
     validarJWT,

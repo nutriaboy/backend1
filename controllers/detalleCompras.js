@@ -50,12 +50,12 @@ const crearDetalleCompra = async (req, res = response) => {
 const actualizarDetalleCompra = async (req, res = response) => {
 
     const { id } = req.params;
-    const { estado, ...data } = req.body;
+    const { estado, compra, ...data } = req.body;
 
     const detalleCompra = await DetalleCompra.findByIdAndUpdate(id, data, { new: true });
 
     await detalleCompra
-        .populate('tipoCerveza', 'nombre')
+        .populate('cerveza', 'nombre marca precioUnit')
         .execPopulate();
 
     res.status(200).json({

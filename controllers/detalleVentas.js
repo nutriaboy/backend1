@@ -29,15 +29,15 @@ const crearDetalleVenta = async (req, res = response) => {
     const { estado, cerveza, ...body } = req.body;
 
     try {
-        const cervezaDB = await DetalleVenta.findOne({ cerveza })
+        // const cervezaDB = await DetalleVenta.findOne({ cerveza })
 
 
-        if (cervezaDB) {
-            return res.status(400).json({
-                ok: false,
-                msg: 'No se puede duplicar Detalle de Cerveza'
-            });
-        }
+        // if (cervezaDB) {
+        //     return res.status(400).json({
+        //         ok: false,
+        //         msg: 'No se puede duplicar Detalle de Cerveza'
+        //     });
+        // }
 
 
         const detalleVenta = new DetalleVenta({cerveza, ...body });
@@ -62,7 +62,7 @@ const crearDetalleVenta = async (req, res = response) => {
 const actualizarDetalleVenta = async (req, res = response) => {
 
     const { id } = req.params;
-    const { estado, ...data } = req.body;
+    const { estado, venta, ...data } = req.body;
 
     const detalleVenta = await DetalleVenta.findByIdAndUpdate(id, data, { new: true });
 

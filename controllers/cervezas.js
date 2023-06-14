@@ -1,6 +1,5 @@
 const { response } = require('express');
-const { Cerveza, Proveedor } = require('../models');
-const { existeProveedorPorId } = require('../helpers');
+const { Cerveza } = require('../models');
 
 
 
@@ -54,9 +53,6 @@ const actualizarCerveza = async (req, res = response) => {
     const { estado, ...data } = req.body;
     try {
         
-        if (proveedor) {
-            data.proveedor = proveedor
-        }
 
         const cerveza = await Cerveza.findByIdAndUpdate(id, data, { new: true });
 
