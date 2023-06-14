@@ -1,5 +1,5 @@
 const { response } = require('express');
-const { DetalleVenta } = require('../models');
+const { DetalleVenta, Cerveza } = require('../models');
 
 
 
@@ -24,23 +24,25 @@ const obtenerDetallesVentas = async (req, res = response) => {
     });
 }
 
+// Restar Cervezas (-)
 const crearDetalleVenta = async (req, res = response) => {
 
-    const { estado, cerveza, ...body } = req.body;
-
+    const { estado, cerveza, cantidad, ...body } = req.body;
+    const {stock} = await Cerveza.findById(cerveza);
     try {
-        // const cervezaDB = await DetalleVenta.findOne({ cerveza })
+        if (stock < cantidad){
+            return res.status(400).json({
+                ok: false,
+                msg: 'No tienes suficiente stock'
+            });
+        }
+
+        if ( stock > 0){
+            await Cerveza.findByIdAndUpdate(cerveza, { stock : stock - cantidad }, { new: true });
+        }
 
 
-        // if (cervezaDB) {
-        //     return res.status(400).json({
-        //         ok: false,
-        //         msg: 'No se puede duplicar Detalle de Cerveza'
-        //     });
-        // }
-
-
-        const detalleVenta = new DetalleVenta({cerveza, ...body });
+        const detalleVenta = new DetalleVenta({cerveza,cantidad, ...body });
         // Guardar en BD
         await detalleVenta.save();
 

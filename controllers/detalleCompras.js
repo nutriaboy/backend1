@@ -1,5 +1,5 @@
 const { response } = require('express');
-const { DetalleCompra } = require('../models');
+const { DetalleCompra, Cerveza } = require('../models');
 
 const obtenerDetallesCompras = async (req, res = response) => {
 
@@ -21,14 +21,19 @@ const obtenerDetallesCompras = async (req, res = response) => {
         detallesCompras
     });
 }
-
+// Sumar Cervezas (+)
 const crearDetalleCompra = async (req, res = response) => {
 
-    const { estado, usuario, ...body } = req.body;
-
+    const { estado, cerveza, cantidad, ...body } = req.body;
+    const {stock} = await Cerveza.findById(cerveza);
     try {
+        
+        if ( stock >= 0){
+            await Cerveza.findByIdAndUpdate(cerveza, { stock : stock + cantidad }, { new: true });
+        }
 
-        const detalleCompra = new DetalleCompra({ usuario, ...body });
+
+        const detalleCompra = new DetalleCompra({cerveza, cantidad,...body });
         // Guardar en BD
         await detalleCompra.save();
 

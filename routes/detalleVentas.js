@@ -19,6 +19,7 @@ router.post('/', [
     check('venta').custom(existeVentaPorId),
     check('cerveza', 'No es un ID válido').isMongoId(),
     check('cerveza').custom(existeCervezaPorId),
+    check('cantidad', 'El precioUnit es obligatorio').not().isEmpty(),
     validarCampos
 ], crearDetalleVenta);
 
