@@ -1,5 +1,5 @@
 const Role = require('../models/role');
-const { Usuario, Suscriptor, Proveedor, Cerveza, Evento, TipoCerveza, DetalleCompra, Ventas, DetalleVenta } = require('../models');
+const { Usuario, Suscriptor, Proveedor, Cerveza, Evento, TipoCerveza, DetalleCompra, Ventas, DetalleVenta, Compra, Envio } = require('../models');
 
 const esRoleValido = async(rol = 'USER_ROLE') => {
 
@@ -52,6 +52,18 @@ const existeProveedorPorId = async( id ) => {
 }
 
 /**
+ * Compras
+ **/
+const existeCompraPorId = async( id ) => {
+
+    // Verificar si el proveedor existe
+    const existeCompra = await Compra.findById(id);
+    if ( !existeCompra ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
+
+/**
  * Cerveza
  **/
 const existeCervezaPorId = async( id ) => {
@@ -63,6 +75,17 @@ const existeCervezaPorId = async( id ) => {
     }
 }
 
+/**
+ * Envio
+ **/
+const existeEnvioPorId = async( id ) => {
+
+    // Verificar si la cerveza existe
+    const existeEnvio = await Envio.findById(id);
+    if ( !existeEnvio ) {
+        throw new Error(`El id no existe ${ id }`);
+    }
+}
 
 
 /**
@@ -90,7 +113,7 @@ const existeTipoCervezaPorId = async( id ) => {
 }
 
 /**
- * Detalle de Cerveza
+ * Detalle de Compra
  **/
 const existeDetalleCompraPorId = async( id ) => {
 
@@ -100,6 +123,8 @@ const existeDetalleCompraPorId = async( id ) => {
         throw new Error(`El id no existe ${ id }`);
     }
 }
+
+
 
 /**
  * Venta
@@ -144,6 +169,8 @@ module.exports = {
     existeUsuarioPorId,
     existeSuscriptorPorId,
     existeProveedorPorId,
+    existeCompraPorId,
+    existeEnvioPorId,
     coleccionesPermitidas,
     existeCervezaPorId,
     existeEventoPorId,
