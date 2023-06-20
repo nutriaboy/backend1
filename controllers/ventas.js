@@ -1,5 +1,5 @@
 const { response } = require('express');
-const { Ventas } = require('../models');
+const { Ventas, DetalleVenta } = require('../models');
 
 
 const obtenerVentas = async (req, res = response) => {
@@ -12,7 +12,7 @@ const obtenerVentas = async (req, res = response) => {
         Ventas.find(query)
             .skip(Number(desde))
             .limit(Number(limite))
-            .populate('usuario','nombre apellido')
+            .populate('usuario', 'nombre apellido')
 
     ]);
 
@@ -22,6 +22,34 @@ const obtenerVentas = async (req, res = response) => {
         ventas
     });
 }
+
+
+const obtenerVentasAndDetalles = async (req, res = response) => {
+    const { usuario } = req.params;
+
+    const ventas = await Ventas.find({ usuario: usuario }).populate('usuario', 'nombre apellido');
+
+    const ventasPromesa = ventas.map(async (venta) => {
+        const detalle = await DetalleVenta.find({ venta: venta.id });
+        venta = {
+            ...venta.toObject(),
+            detalle: detalle
+        }
+        // console.log(venta);
+        return venta;
+    });
+
+    const ventasUsuarios = await Promise.all(ventasPromesa);
+
+    console.log(ventasUsuarios);
+    res.json({
+        ok: true,
+        ventasUsuarios,
+    });
+
+
+}
+
 
 const crearVenta = async (req, res = response) => {
 
@@ -77,6 +105,7 @@ const borrarVenta = async (req, res = response) => {
 
 module.exports = {
     obtenerVentas,
+    obtenerVentasAndDetalles,
     crearVenta,
     actualizarVenta,
     borrarVenta

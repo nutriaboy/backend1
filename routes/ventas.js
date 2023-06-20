@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerVentas, crearVenta, actualizarVenta, borrarVenta } = require('../controllers/ventas');
+const { obtenerVentas, crearVenta, actualizarVenta, borrarVenta, obtenerVentasAndDetalles } = require('../controllers/ventas');
 const { validarJWT, validarCampos, esAdminRole } = require('../middlewares');
 const { existeUsuarioPorId, existeVentaPorId } = require('../helpers');
 
@@ -12,6 +12,12 @@ const { existeUsuarioPorId, existeVentaPorId } = require('../helpers');
 const router = Router();
 
 router.get('/', obtenerVentas);
+
+router.get('/detalle/:usuario',[
+    check('usuario', 'No es un ID válido').isMongoId(),
+    check('usuario').custom( existeUsuarioPorId ),
+    validarCampos
+], obtenerVentasAndDetalles )
 
 router.post('/',[
     validarJWT,
