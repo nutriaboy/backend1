@@ -41,7 +41,6 @@ const obtenerVentasAndDetalles = async (req, res = response) => {
 
     const ventasUsuarios = await Promise.all(ventasPromesa);
 
-    console.log(ventasUsuarios);
     res.json({
         ok: true,
         ventasUsuarios,
