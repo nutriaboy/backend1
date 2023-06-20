@@ -27,7 +27,7 @@ const obtenerVentas = async (req, res = response) => {
 const obtenerVentasAndDetalles = async (req, res = response) => {
     const { usuario } = req.params;
 
-    const ventas = await Ventas.find({ usuario: usuario }).populate('usuario', 'nombre apellido');
+    const ventas = await Ventas.find({ usuario: usuario }).populate('usuario', 'nombre apellido').sort({ createdAt: 'desc' });
 
     const ventasPromesa = ventas.map(async (venta) => {
         const detalle = await DetalleVenta.find({ venta: venta.id }).populate('cerveza', 'nombre marca');
