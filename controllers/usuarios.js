@@ -28,7 +28,7 @@ const usuariosGet = async (req = request, res = response) => {
 
 const usuariosPost = async (req, res = response) => {
 
-    const { nombre, apellido, correo, rut, password, rol, telefono, direccion, genero, ciudad } = req.body;
+    let { nombre, apellido, correo, rut, password, rol, telefono, direccion, genero, ciudad } = req.body;
 
     try {
         const [usuarioRut] = await Usuario.find({ rut })
@@ -40,6 +40,8 @@ const usuariosPost = async (req, res = response) => {
                 msg: 'El rut del usuario ya se encuentra registrado'
             });
         }
+
+        correo = correo.toLowerCase();
 
 
         const usuario = new Usuario({ nombre, apellido, correo, rut, password, rol, telefono, direccion, genero, ciudad });
